@@ -2,7 +2,7 @@
     "name": "converse-backend",
     "version": "1.0.0",
     "description": "commenting system for websites",
-    "main": "app.js",
+    "main": "server.js",
     "private": "true",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,14 +11,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/CoderTousif/commenting-system.git"
+        "url": "git+https://github.com/CoderTousif/converse-app.git"
     },
     "author": "Tousif",
-    "license": "ISC",
+    "license": "UNLICENSED",
     "bugs": {
-        "url": "https://github.com/CoderTousif/commenting-system/issues"
+        "url": "https://github.com/CoderTousif/converse-app/issues"
     },
-    "homepage": "https://github.com/CoderTousif/commenting-system#readme",
+    "homepage": "https://github.com/CoderTousif/converse-app#readme",
     "dependencies": {
         "bcrypt": "^5.0.0",
         "cookie-parser": "^1.4.5",
@@ -29,12 +29,13 @@
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^5.9.21",
         "morgan": "^1.10.0",
-        "multer": "^1.4.2",
-        "transloadit": "^2.0.10",
-        "sharp": "^0.26.2"
+        "multer": "^1.4.2"
     },
     "devDependencies": {
         "dotenv": "^8.2.0",
         "nodemon": "^2.0.4"
+    },
+    "engines": {
+        "node": ">=12"
     }
 }

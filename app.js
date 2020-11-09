@@ -1,7 +1,7 @@
 // express app
 const path = require("path");
 const express = require("express");
-require("dotenv").config({ path: "./config.env" });
+require("dotenv").config();
 const morgan = require("morgan");
 // const helmet = require('helmet');
 // const mongoSanitize = require('express-mongo-sanitize');
@@ -22,8 +22,7 @@ const app = express();
 // app.set('views', path.join(__dirname, 'views'));
 // Global Middlewares
 // serve static files
-app.use(express.static(path.join(__dirname, "public/converse")));
-app.use(express.static(path.join(__dirname, "public/authPage")));
+app.use(express.static(path.join(__dirname, "public")));
 
 // app.use("/converse", express.static(path.join(__dirname, "public")));
 // cross origin
@@ -34,7 +33,7 @@ const origin =
 
 const corsOptions = {
     credentials: true,
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: origin,
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
@@ -110,33 +109,21 @@ if (process.env.NODE_ENV === "development") {
 // app.use(passport.session());
 
 // custom middleware
-app.use((req, res, next) => {
-    const cookie = { ...req.cookies };
-    // const query = { ...req.query };
-    console.log(cookie);
-    // console.log(query);
-    // console.log(req.headers.authorization);
-    // console.log("signedCookie:", req.signedCookies);
-    next(); // calling next middleware
-});
+// app.use((req, res, next) => {
+//     const cookie = { ...req.cookies };
+//     // const query = { ...req.query };
+//     console.log(cookie);
+//     // console.log(query);
+//     // console.log(req.headers.authorization);
+//     // console.log("signedCookie:", req.signedCookies);
+//     next(); // calling next middleware
+// });
 
 // router mounting
 
 app.get("/", (req, res) => {
     res.json({
         message: "Hello user",
-    });
-});
-
-app.get("/converse", (req, res) => {
-    res.sendFile("index.html", {
-        root: "public/converse",
-    });
-});
-
-app.get("/login", (req, res) => {
-    res.sendFile("index.html", {
-        root: "public/authPage",
     });
 });
 
