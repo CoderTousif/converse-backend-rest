@@ -1,7 +1,6 @@
 // express app
 const path = require("path");
 const express = require("express");
-require("dotenv").config();
 const morgan = require("morgan");
 // const helmet = require('helmet');
 // const mongoSanitize = require('express-mongo-sanitize');
@@ -26,18 +25,58 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // app.use("/converse", express.static(path.join(__dirname, "public")));
 // cross origin
-const origin =
-    process.env.NODE_ENV === "production"
-        ? process.env.FRONTEND_PROD_URL
-        : process.env.FRONTEND_LOCAL_URL;
+// const origin =
+//     process.env.NODE_ENV === "production"
+//         ? process.env.FRONTEND_PROD_URL
+//         : process.env.FRONTEND_LOCAL_URL;
 
 const corsOptions = {
-    credentials: true,
-    origin: origin,
+    // credentials: true,
+    origin: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+    exposedHeaders: ["Content-Range", "X-Content-Range"],
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
 app.use(cors(corsOptions));
+
+// app.use((req, res, next) => {
+//     const corsWhitelist = [
+//         "https://converse-phi.vercel.app",
+//         "https://converse-user-panel.vercel.app",
+//         "https://adilide.vercel.app",
+//         "http://localhost:3000/",
+//         "http://localhost:3001",
+//     ];
+//     if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
+//         res.header("Access-Control-Allow-Origin", req.headers.origin);
+//         res.header(
+//             "Access-Control-Allow-Headers",
+//             "Origin, X-Requested-With, Content-Type, Accept"
+//         );
+//         res.header("Access-Control-Allow-Credentials", "true");
+//     }
+
+//     next();
+// });
+
+// const allowlist = [
+//     "https://converse-phi.vercel.app",
+//     "https://converse-user-panel.vercel.app",
+//     "https://adilide.vercel.app",
+//     "http://localhost:3000/",
+//     "http://localhost:3001",
+// ];
+
+// const corsOptionsDelegate = function (req, callback) {
+//     let corsOptions;
+//     if (allowlist.indexOf(req.header("Origin")) !== -1) {
+//         corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
+//     } else {
+//         corsOptions = { origin: false }; // disable CORS for this request
+//     }
+//     callback(null, corsOptions); // callback expects two parameters: error and options
+// };
 
 // for specific origin
 // app.use(
@@ -109,15 +148,15 @@ if (process.env.NODE_ENV === "development") {
 // app.use(passport.session());
 
 // custom middleware
-// app.use((req, res, next) => {
-//     const cookie = { ...req.cookies };
-//     // const query = { ...req.query };
-//     console.log(cookie);
-//     // console.log(query);
-//     // console.log(req.headers.authorization);
-//     // console.log("signedCookie:", req.signedCookies);
-//     next(); // calling next middleware
-// });
+app.use((req, res, next) => {
+    // const cookie = { ...req.cookies };
+    // const query = { ...req.query };
+    // console.log(cookie);
+    // console.log(query);
+    console.log(req.headers.authorization);
+    // console.log("signedCookie:", req.signedCookies);
+    next(); // calling next middleware
+});
 
 // router mounting
 

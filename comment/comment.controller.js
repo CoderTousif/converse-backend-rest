@@ -130,8 +130,6 @@ exports.getAllComments = catchAsync(async (req, res, next) => {
     // let token;
     // if (req.cookies.jwt) token = req.cookies.jwt;
 
-    const allComments = await Comment.find();
-
     // building the query
     // const tours = await Tour.find()
     //     .where('duration')
@@ -148,11 +146,15 @@ exports.getAllComments = catchAsync(async (req, res, next) => {
     // execute query
     const docs = await features.query;
     // const docs = await features.query.explain();
+    docs.map((comment) => {
+        const photo = comment.userPhoto;
+        comment.userPhoto = `https://f000.backblazeb2.com/file/user-profile-pics/${photo}`;
+    });
 
     // send response
     res.status(200).json({
         status: "success",
-        results: allComments.length,
+        results: docs.length,
         data: docs,
     });
 });
