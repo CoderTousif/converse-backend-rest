@@ -29,7 +29,7 @@ const handleTokenExpiredError = () => {
 
 const sendErrorDev = (err, req, res) => {
     //a) if request url starts with /api
-    if (req.originalUrl.startsWith("/api")) {
+    if (req.originalUrl.startsWith("/v1")) {
         return res.status(err.statusCode).json({
             status: err.status,
             message: err.message,
@@ -47,9 +47,8 @@ const sendErrorDev = (err, req, res) => {
 const sendErrorProd = (err, req, res) => {
     // log the error to the console
     console.error("PRODUCTION ERROR:", err);
-    console.log("starts_with_/api:", req.originalUrl.startsWith("/api"));
     //a) if request url starts with /api
-    if (req.originalUrl.startsWith("/api")) {
+    if (req.originalUrl.startsWith("/v1")) {
         // operational, trusted errors to the client
         if (err.isOperational) {
             return res.status(err.statusCode).json({

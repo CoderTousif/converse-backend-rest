@@ -25,14 +25,14 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // app.use("/converse", express.static(path.join(__dirname, "public")));
 // cross origin
-// const origin =
-//     process.env.NODE_ENV === "production"
-//         ? process.env.FRONTEND_PROD_URL
-//         : process.env.FRONTEND_LOCAL_URL;
+const origin =
+    process.env.NODE_ENV === "development"
+        ? process.env.FRONTEND_LOCAL_URL
+        : process.env.FRONTEND_PROD_URL;
 
 const corsOptions = {
-    // credentials: true,
-    origin: true,
+    credentials: true,
+    origin: /vercel\.app$/,
     allowedHeaders: ["Content-Type", "Authorization"],
     exposedHeaders: ["Content-Range", "X-Content-Range"],
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
@@ -142,21 +142,16 @@ if (process.env.NODE_ENV === "development") {
 // });
 // app.use('/api', limiter);
 
-// Initialize Passport and restore authentication state, if any, from the
-// session.
-// app.use(passport.initialize());
-// app.use(passport.session());
-
 // custom middleware
-app.use((req, res, next) => {
-    // const cookie = { ...req.cookies };
-    // const query = { ...req.query };
-    // console.log(cookie);
-    // console.log(query);
-    console.log(req.headers.authorization);
-    // console.log("signedCookie:", req.signedCookies);
-    next(); // calling next middleware
-});
+// app.use((req, res, next) => {
+// const cookie = { ...req.cookies };
+// const query = { ...req.query };
+// console.log(cookie);
+// console.log(query);
+// console.log(req.headers.authorization);
+// console.log("signedCookie:", req.signedCookies);
+// next(); // calling next middleware
+// });
 
 // router mounting
 
@@ -168,9 +163,9 @@ app.get("/", (req, res) => {
 
 // entry point to the API
 // app.use('/v1/tours', tourRouter);
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/comments", commentRouter);
-app.use("/api/v1/profile", profileRouter);
+app.use("/v1/users", userRouter);
+app.use("/v1/comments", commentRouter);
+app.use("/v1/profile", profileRouter);
 
 // entry point to the front-end
 // app.use('/', viewRouter);
