@@ -25,10 +25,12 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // app.use("/converse", express.static(path.join(__dirname, "public")));
 // cross origin
-const origin =
-    process.env.NODE_ENV === "development"
-        ? process.env.FRONTEND_LOCAL_URL
-        : process.env.FRONTEND_PROD_URL;
+// const origin =
+//     process.env.NODE_ENV === "development"
+//         ? process.env.FRONTEND_LOCAL_URL
+//         : process.env.FRONTEND_PROD_URL;
+
+// /vercel\.app$/
 
 const corsOptions = {
     credentials: true,
@@ -161,11 +163,19 @@ app.get("/", (req, res) => {
     });
 });
 
+app.get("/api/v1/login", (req, res) => {
+    res.redirect("https://converse-user-panel.vercel.app/login");
+});
+
+app.get("/api/v1/profile", (req, res) => {
+    res.redirect("https://converse-user-panel.vercel.app/profile");
+});
+
 // entry point to the API
 // app.use('/v1/tours', tourRouter);
-app.use("/v1/users", userRouter);
-app.use("/v1/comments", commentRouter);
-app.use("/v1/profile", profileRouter);
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/comments", commentRouter);
+app.use("/api/v1/profile", profileRouter);
 
 // entry point to the front-end
 // app.use('/', viewRouter);

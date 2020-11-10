@@ -22,7 +22,7 @@ const signAndSendToken = (user, statusCode, res) => {
     const token = signToken(user._id);
     const cookieOptions = {
         expires: new Date(
-            Date.now() + process.env.COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000 // 70days
+            Date.now() + process.env.COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
         ),
         httpOnly: true, // not modifiable by the browser
     };
